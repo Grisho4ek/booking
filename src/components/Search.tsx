@@ -5,6 +5,8 @@ import queryString from 'query-string';
 import * as Yup from 'yup';
 import moment from 'moment';
 
+import { IFormField } from '../typings';
+
 interface Props {
   sendRequest: (url: string) => Promise<void>;
 }
@@ -13,24 +15,6 @@ interface FormValues {
   date: string;
   country: string;
 }
-
-enum Fields {
-  date = 'date',
-  country = 'country'
-}
-
-const fields = [
-  { name: Fields.date, type: 'date', label: 'Departure date' },
-  { name: Fields.country, type: 'text', label: 'Country to travel' }
-];
-
-const searchSchema = Yup.object().shape({
-  date: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
-  country: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required')
-});
 
 export const Search: React.FC<Props> = ({ sendRequest }) => {
   const initialValues: FormValues = {
@@ -49,11 +33,15 @@ export const Search: React.FC<Props> = ({ sendRequest }) => {
                 ? moment(values.date).format('DD.MM.YYYY')
                 : undefined;
 
+              const country = values.country || undefined;
+
               await sendRequest(
-                `/tickets/?${queryString.stringify({
-                  country: values.country,
-                  date
-                })}`
+                !country && !date
+                  ? '/tickets'
+                  : `/tickets/?${queryString.stringify({
+                      country,
+                      date
+                    })}`
               );
               setSubmitting(false);
             }}
@@ -110,3 +98,13 @@ export const Search: React.FC<Props> = ({ sendRequest }) => {
     </Box>
   );
 };
+
+const fields: IFormField<FormValues>[] = [
+  { name: 'date', type: 'date', label: 'Departure date' },
+  { name: 'country', type: 'text', label: 'Country to travel' }
+];
+
+const searchSchema = Yup.object().shape({
+  date: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!'),
+  country: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!')
+});

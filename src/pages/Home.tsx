@@ -5,6 +5,7 @@ import { useApi } from '../hooks/useApi';
 import { ITicket } from '../typings';
 
 import { ToastContext } from '../context/toast';
+import { Box } from '@material-ui/core';
 
 export const Home = () => {
   const { setIsOpen, setMessage, setType } = useContext(ToastContext);
@@ -23,9 +24,9 @@ export const Home = () => {
   }, [error, setIsOpen, setMessage, setType]);
 
   return (
-    <>
+    <Box data-testid='home-page'>
       <Search sendRequest={sendRequest} />
       <TicketsList pending={pending} tickets={tickets} error={!!error} />
-    </>
+    </Box>
   );
 };

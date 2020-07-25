@@ -32,6 +32,9 @@ export const theme = createMuiTheme({
       contained: {
         borderRadius: '10px'
       },
+      outlined: {
+        borderRadius: '10px'
+      },
       containedPrimary: {
         color: '#fff'
       }
