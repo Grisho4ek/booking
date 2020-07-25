@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { Toast } from '../Toast';
-import { ToastProvider } from '../../providers/ToastProvider';
-import { errText } from '../../hooks/useApi';
+import { Toast } from '../components/Toast';
+import { ToastProvider } from '../providers/ToastProvider';
+import { errText } from '../hooks/useApi';
 
 describe('test Toast component', () => {
   const message = 'Success';
