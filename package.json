@@ -33,7 +33,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts,.tsx",
-    "test:ci": "CI=true npm test",
+    "test:ci": "cross-env CI=true npm test",
     "test:coverage": "react-scripts test --watchAll=false --coverage"
   },
   "eslintConfig": {
@@ -58,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "husky": "^4.2.5"
   }
 }
